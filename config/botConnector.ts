@@ -1,7 +1,10 @@
 import telegramBot from 'node-telegram-bot-api';
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const botConnector = async () => {
-    const token = '6921919649:AAGistqbmTDwe252S3hcnSUqOB3XdVA08Vs';
+    const token : string = process.env.BOT_TOKEN!;
     const bot = new telegramBot(token, {polling: true});
 
     bot.on('message',(message)=>{
