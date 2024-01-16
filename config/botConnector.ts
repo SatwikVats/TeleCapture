@@ -7,9 +7,11 @@ const botConnector = async () => {
     const token : string = process.env.BOT_TOKEN!;
     const bot = new telegramBot(token, {polling: true});
 
-    bot.on('message',(message)=>{
-        console.log('message received:', message);
-    });
+    return bot;
+
+    // bot.on('message',(message)=>{
+    //     console.log('message received:', message);
+    // });
 }
 
 export default botConnector;
