@@ -5,11 +5,19 @@ dotenv.config();
 
 const connectRedis = async () => {
 
+
+    const isDocker = process.env.DOCKER === 'true'? true: false;
     let client;
 
-    // Default host 127.0.0.1 and port 6379 otherwise.
-    client = createClient();
-    
+    if(isDocker){
+        //Updating the host incase server is running inside a Docker conatiner.
+        client = createClient({url: "redis://@redis-telecapture:6379"});
+    }
+    else{
+        // Default host 127.0.0.1 and port 6379 otherwise.
+        client = createClient();
+    }
+
     client.on('error', (error: any) => {
     console.error('Redis connection error:', error);
     });
