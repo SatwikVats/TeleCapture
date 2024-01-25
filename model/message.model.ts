@@ -1,10 +1,15 @@
 import mongoose from "mongoose";
 
 const messageSchema = new mongoose.Schema({
-    messageId: {type: String, required: true}, 
     senderId: {type: String, required: true},
-    chatID: {type: String, required: true},
-    message: {type: Object, required: true},
+    chatId: {type: String, required: true},
+    senderFirstName: {type: String, required: true},
+    senderLastName: {type: String, required: true},
+    chatName: {type: String},
+    // message: {type: Object, required: true},
+    text: {type: String, required: true},
+    chatType: {type: String, required: true},
+    sentAt: {type: String, required: true},
 },{
     timestamps: true,
 });
