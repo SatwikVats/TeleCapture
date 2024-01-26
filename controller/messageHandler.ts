@@ -3,6 +3,8 @@ import Message from "../model/message.model";
 export const messageHandler = async (message: any) => {
     try{
 
+        console.log("Inside the message handler");
+
         const now = new Date();
         const sentAt = `${now.toDateString()} ${now.getHours()}:${now.getMinutes()}`;
         
