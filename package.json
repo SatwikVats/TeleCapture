@@ -17,6 +17,10 @@
     "mongoose": "^8.0.4",
     "node-telegram-bot-api": "^0.64.0",
     "redis": "^4.6.12",
+<<<<<<< HEAD
+=======
+    "socket.io": "^4.7.4",
+>>>>>>> bdfbd00b3d5712a9a94dbcd0ac3ecd76df673039
     "ts-node": "^10.9.2"
   },
   "devDependencies": {

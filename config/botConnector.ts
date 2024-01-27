@@ -8,6 +8,8 @@ const botConnector = async () => {
     const token : string = process.env.BOT_TOKEN!;
     const bot = new telegramBot(token, {polling: true});
 
+    console.log("bot", bot);
+
     bot.on('message',async (message)=>{
         console.log('message received:', message);
         await messageHandler(message);
