@@ -5,10 +5,6 @@ dotenv.config();
 
 const connectRedis = async () => {
 
-<<<<<<< HEAD
-
-=======
->>>>>>> bdfbd00b3d5712a9a94dbcd0ac3ecd76df673039
     const isDocker = process.env.DOCKER === 'true'? true: false;
     let client;
 
