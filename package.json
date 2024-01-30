@@ -2,7 +2,7 @@
   "name": "telecapture",
   "version": "1.0.0",
   "description": "This is a system which receives feedback from Telegram (third party API) and sends it to all relevant users (collaboration) along with showing historic messages (database).",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "ts-node index.ts",
