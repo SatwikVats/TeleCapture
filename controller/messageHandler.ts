@@ -1,4 +1,6 @@
+import io from "..";
 import Message from "../model/message.model";
+import { createMessageCache } from "./messageCacheManager";
 
 export const messageHandler = async (message: any) => {
     try{
@@ -23,11 +25,50 @@ export const messageHandler = async (message: any) => {
         const savedMessage = await newMessage.save();
 
         console.log("savedMessage", savedMessage);
+        const messageObjectToBeCached = {...messageObject, id: savedMessage._id.toString()};
+
+        await createMessageCache(messageObjectToBeCached);
+
+
+        io.emit('messages', messageObject);
+
+        console.log("savedMessage", savedMessage);
         
         if(!savedMessage){
             console.error("Failed to save the message in DB!");
         }
 
+    }
+    catch(err){
+        console.error(err);
+    }
+}
+
+
+export const fetchMessages = async() => {
+    try{
+        console.log("Inside fetchMessages");
+
+        const result = await Message.find();
+        if(result){
+
+            result.forEach((message) => {
+                console.log("Message in DB:", message);
+
+                const messageObject = {
+                    senderId: message.senderId,
+                    chatId: message.chatId,
+                    senderFirstName: message.senderFirstName,
+                    senderLastName: message.senderLastName,
+                    chatType: message.chatType,
+                    chatName: message.chatName || "",
+                    sentAt:message.sentAt,
+                    text: message.text,  
+                }
+                io.emit('messages', messageObject);
+            });
+        }
+        
     }
     catch(err){
         console.error(err);

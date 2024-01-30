@@ -5,17 +5,28 @@ import { messageHandler } from '../controller/messageHandler';
 dotenv.config();
 
 const botConnector = async () => {
-    const token : string = process.env.BOT_TOKEN!;
-    const bot = new telegramBot(token, {polling: true});
+    try{
+        const token : string = process.env.BOT_TOKEN!;
+        const bot = new telegramBot(token, {polling: true});
 
-    console.log("bot", bot);
+        if(bot){
+            console.log("Connected to bot!");
+        }
 
-    bot.on('message',async (message)=>{
-        console.log('message received:', message);
-        await messageHandler(message);
-    });
+        bot.on('message',async (message)=>{
+            console.log('message received:', message);
+            await messageHandler(message);
+        });
 
-    return bot;
+
+        // bot.on()
+
+        return bot;
+    }
+    catch(err){
+        console.error("Error connecting to Bot");
+    }
+    
 }
 
 export default botConnector;
