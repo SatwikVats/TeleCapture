@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  
+  redis-telecapture:
+    image: redislabs/redismod
+    container_name: redis-telecapture
+    ports:
+      - "6379:6379"
+    platform: linux/amd64
+
+  telecapture:
+    build:
+      context: .
+    container_name: telecapture
+    environment:
+      - DOCKER=true
+    ports:
+      - "8000:8000"
+    platform: linux/amd64
+    volumes:
+      - .:/telecapture
+      - /telecapture/node_modules
+    depends_on:
+      - redis-telecapture
+    command: npm start
