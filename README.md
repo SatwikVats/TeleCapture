@@ -11,7 +11,7 @@ Prerequisites to test the application are as follows:
 - Follow the steps given below to run the codebase locally with/without Docker.
 - Send a message to this Bot on Telegram either in private chat or on a group. If testing out for group, ensure that the Bot has the admin rights in that particular group.
 - The messages sent will be dynamically loaded on local host:8000.
-<img src="assets/teleCapture.png" width="400" height="400" align="center">
+<img src="assets/teleCapture.png" width="400" height="400">
 
 
 ## Steps to run the application locally (without Docker)
