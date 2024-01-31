@@ -11,7 +11,7 @@ const connectDB = async () => {
         fetchMessages();        
     }
     catch(err){
-        console.log(err);
+        console.error(`Error connecting to DB: ${err}`);
     }
     
 }

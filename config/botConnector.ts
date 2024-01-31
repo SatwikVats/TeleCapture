@@ -18,9 +18,6 @@ const botConnector = async () => {
             await messageHandler(message);
         });
 
-
-        // bot.on()
-
         return bot;
     }
     catch(err){
