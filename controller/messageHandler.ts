@@ -1,6 +1,6 @@
 import io from "..";
 import Message from "../model/message.model";
-import { createMessageCache } from "./messageCacheManager";
+import { createMessageCache, fetchMessageCache } from "./messageCacheManager";
 
 export const messageHandler = async (message: any) => {
     try{
@@ -26,7 +26,6 @@ export const messageHandler = async (message: any) => {
 
         console.log("savedMessage", savedMessage);
         const messageObjectToBeCached = {...messageObject, id: savedMessage._id.toString()};
-
         await createMessageCache(messageObjectToBeCached);
 
 
@@ -48,13 +47,25 @@ export const messageHandler = async (message: any) => {
 export const fetchMessages = async() => {
     try{
         console.log("Inside fetchMessages");
+        console.log("Attempt fetching messages from cache");
 
-        const result = await Message.find();
+        let result;
+        let isCacheUpdateRequired = false;
+
+        result = await fetchMessageCache();
+        if(result && result.length === 0)   isCacheUpdateRequired = true;
+
+        if(result === null || result.length === 0){
+            console.log("Attempt fetching messages from Db; couldn't retrieve from cache");
+            result = await Message.find().sort({'timestamp': -1}).limit(100);
+        }
+
+
+        // result = await Message.find();
+        console.log("result from Cache or DB:", result);
+
         if(result){
-
-            result.forEach((message) => {
-                console.log("Message in DB:", message);
-
+            result.forEach(async (message) => {
                 const messageObject = {
                     senderId: message.senderId,
                     chatId: message.chatId,
@@ -66,9 +77,13 @@ export const fetchMessages = async() => {
                     text: message.text,  
                 }
                 io.emit('messages', messageObject);
+
+                if(isCacheUpdateRequired){
+                    const messageObjectToBeCached = {...messageObject, id: message._id.toString()};
+                    await createMessageCache(messageObjectToBeCached);
+                }
             });
-        }
-        
+        }        
     }
     catch(err){
         console.error(err);
