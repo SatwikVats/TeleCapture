@@ -1,6 +1,6 @@
 # TeleCapture
 
-This is a system which receives feedback from Telegram (third party API) and sends it to all relevant users (collaboration) along with showing previous messages (database).
+This is a sophisticated system which receives feedback from Telegram (third party API) and sends it to all relevant clients (end-users) along with showing previous messages (database).
 Stack Used: Node.js, Express.js, Typescript, MongoDB, Redis, Docker
 
 
@@ -10,7 +10,7 @@ Prerequisites to test the application are as follows:
 - Create a .env file and ask the author to share the content. 
 - Follow the steps given below to run the codebase locally with/without Docker.
 - Send a message to this Bot on Telegram either in private chat or on a group. If testing out for group, ensure that the Bot has the admin rights in that particular group.
-![TeleCapture](teleCapture.png)
+![TeleCapture](teleCapture.png =100*100)
 - The messages sent will be dynamically loaded on local host:8000.
 
 
