@@ -39,3 +39,11 @@ Try connecting to a different network.
 2. https://www.youtube.com/watch?v=bFFMX1L8TKI
 3. https://javascript.info/long-polling
 4. https://stackoverflow.com/questions/24501756/sort-mongodb-documents-by-timestamp-in-desc-order
+5. https://www.youtube.com/watch?v=RUL9yTzOTuU&list=PLdHg5T0SNpN09AlLBAYahKZUrAWsIL7No
+6. https://socket.io/docs/v4/rooms/
+
+
+
+Notes-
+
+To make sure that fetchMessages() loads messages only for the sockets where its not already loaded, we have a room named 'already initialized'

@@ -3,13 +3,15 @@ import { fetchMessages } from "../controller/messageHandler";
 
 let socketsConnected = new Set();
 
-const onConnected = (socket: any) => {
+const onConnected = async (socket: any) => {
         console.log("socket.id", socket.id);
         socketsConnected.add(socket.id);
 
         io.emit('active-clients', socketsConnected.size);
 
-        fetchMessages();
+        await fetchMessages();
+
+        socket.join('already initialized');
 
         socket.on('disconnect', () => {
                 console.log("Socket disconnected:", socket.id);

@@ -1,10 +1,9 @@
 import connectRedis from "../config/redisConnector";
 
-//create
 export const createMessageCache = async (message: any) => {
 
     try{
-        //Data going to cache
+        //Data storing in cache
         const redisClient = await connectRedis();
         
         await redisClient.rPush('messageQueue', message.id);
@@ -26,12 +25,11 @@ export const createMessageCache = async (message: any) => {
         };
 
         await redisClient.disconnect();
-        
+
     }
     catch(err){
         console.error(err);
     }
-
 }
 
 
@@ -49,20 +47,14 @@ export const fetchMessageCache = async () => {
             messages.push(message);
             i++; 
         }
-        
 
+        console.log("No of messages found in cache:", queueLength);
+        
         await redisClient.disconnect();
-        return messages;
-
-        
+        return messages;        
     }
     catch(err){
         console.error(err);
         return null;
     }
-
 }
-
-//update (in case a message is edited)
-
-//fetch from DB.

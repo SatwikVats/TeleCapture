@@ -50,19 +50,15 @@ export const fetchMessages = async() => {
         console.log("Attempt fetching messages from cache");
 
         let result;
-        let isCacheUpdateRequired = false;
+        let isCacheRecoveryRequired = false;
 
         result = await fetchMessageCache();
-        if(result && result.length === 0)   isCacheUpdateRequired = true;
+        if(result && result.length === 0)   isCacheRecoveryRequired = true;
 
         if(result === null || result.length === 0){
             console.log("Attempt fetching messages from Db; couldn't retrieve from cache");
             result = await Message.find().sort({'timestamp': -1}).limit(100);
         }
-
-
-        // result = await Message.find();
-        console.log("result from Cache or DB:", result);
 
         if(result){
             result.forEach(async (message) => {
@@ -76,9 +72,9 @@ export const fetchMessages = async() => {
                     sentAt:message.sentAt,
                     text: message.text,  
                 }
-                io.emit('messages', messageObject);
+                io.except('already initialized').emit('messages', messageObject);
 
-                if(isCacheUpdateRequired){
+                if(isCacheRecoveryRequired){
                     const messageObjectToBeCached = {...messageObject, id: message._id.toString()};
                     await createMessageCache(messageObjectToBeCached);
                 }
