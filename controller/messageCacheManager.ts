@@ -26,15 +26,7 @@ export const createMessageCache = async (message: any) => {
         };
 
         await redisClient.disconnect();
-
-
-
-        // const redisCheck = await redisClient.hLen(`messages:${message.id}`);
         
-        // if(redisCheck===0){
-        //     await redisClient.hSet(`messages:${message.id}`, message);
-        //     await redisClient.disconnect();
-        // }
     }
     catch(err){
         console.error(err);
@@ -45,11 +37,28 @@ export const createMessageCache = async (message: any) => {
 
 export const fetchMessageCache = async () => {
     try{
-        //Data going to cache
+        //Retrieving message from cache
+        const redisClient = await connectRedis();
+        var  messages = [];
+
+        const queueLength = await redisClient.lLen('messageQueue');
+        var i = 0;
+        while(i<queueLength){
+            const messageId = await redisClient.lIndex('messageQueue', i);
+            const message = await redisClient.hGetAll(`messages:${messageId}`);
+            messages.push(message);
+            i++; 
+        }
+        
+
+        await redisClient.disconnect();
+        return messages;
+
         
     }
     catch(err){
         console.error(err);
+        return null;
     }
 
 }

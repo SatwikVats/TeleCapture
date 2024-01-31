@@ -38,3 +38,4 @@ Try connecting to a different network.
 1. https://core.telegram.org/bots/api
 2. https://www.youtube.com/watch?v=bFFMX1L8TKI
 3. https://javascript.info/long-polling
+4. https://stackoverflow.com/questions/24501756/sort-mongodb-documents-by-timestamp-in-desc-order
